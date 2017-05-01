@@ -13,11 +13,11 @@ class Reply extends Component {
 
   render() {
     return (
-      <div >
-        {this.props.reply.user}
-        {this.props.reply.message}
-        <span onClick={this.clickReply}> Reply </span>
-        {this.props.reply.time}
+      <div className='Reply'>
+        <div className='User'>{this.props.reply.user}</div>
+        <div className='Message'>{this.props.reply.message.replace('\n', '<br />')}</div>
+        <span className='ReplyButton' onClick={this.clickReply}> Reply </span>
+        <span className='Time'>{this.props.reply.time}</span>
       </div>
     );
   }

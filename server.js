@@ -14,40 +14,35 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-app.get('/comments', function (req, res) {
-  res.json({ comments: data });
+app.get('/comments/:page', function (req, res) {
+  const page = parseInt(req.params.page);
+  console.log(typeof(page), page);
+  let totalPage = Math.ceil(data.length/5);
+  if(totalPage === 0) totalPage = 1;
+  if(page === 0)
+    res.json({ comments: data.slice(-5), totalPage: totalPage});
+  else
+    res.json({ comments: data.slice((-1)*page*5-5, (-1)*page*5), 
+      totalPage: totalPage});
   console.log('GET');
 });
 
 app.post('/comments', function(req, res) {
   const body = req.body;
-  const timeStr = getTimeStr(body.time);
   data.push({ commentIdx: data.length, user: body.user,
-    message: body.message, time: timeStr, replies: [] });
-  res.json({ time: timeStr, commentIdx: data.length-1 });
+    message: body.message, time: body.time, replies: [] });
+  res.json({ commentIdx: data.length-1, totalPage: Math.ceil(data.length/5) });
 });
 
 app.post('/replies', function(req, res) {
   const body = req.body;
-  const timeStr = getTimeStr(body.time);
   const replies = data[body.commentIdx].replies;
-  replies.push({ replyIdx: data.length, user: body.user,
-    message: body.message, time: timeStr });
-  res.json({ time: timeStr, replyIdx: replies.length-1 });
-  console.log(data);
+  replies.push({ replyIdx: replies.length, user: body.user,
+    message: body.message, time: body.time });
+  res.json({ replyIdx: replies.length-1 });
 });
 
 app.listen(app.get('port'), function() {
   console.log('listening on port ', app.get('port'), '!'); 
 });
 
-function getTimeStr(str) {
-  let time = new Date(str);
-  return time.getFullYear() + '-' + to2Digits(time.getMonth()+1) + '-' + 
-    to2Digits(time.getDate()) + ' ' + to2Digits(time.getHours()) + ':' + 
-    to2Digits(time.getMinutes());
-}
-
-function to2Digits(str) {
-  return ('0'+str).slice(-2);
-}
