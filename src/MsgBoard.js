@@ -4,7 +4,7 @@ import Comment from './Comment';
 import nextIco from './pic/next.png';
 import previousIco from './pic/previous.png';
 const axios = require('axios');
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://server-rumiysqenm.now.sh';
 
 class MsgBoard extends Component {
   constructor(props) {

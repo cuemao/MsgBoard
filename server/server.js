@@ -16,7 +16,6 @@ app.all('*', function (req, res, next) {
 
 app.get('/comments/:page', function (req, res) {
   const page = parseInt(req.params.page);
-  console.log(typeof(page), page);
   let totalPage = Math.ceil(data.length/5);
   if(totalPage === 0) totalPage = 1;
   if(page === 0)
@@ -24,7 +23,6 @@ app.get('/comments/:page', function (req, res) {
   else
     res.json({ comments: data.slice((-1)*page*5-5, (-1)*page*5), 
       totalPage: totalPage});
-  console.log('GET');
 });
 
 app.post('/comments', function(req, res) {
