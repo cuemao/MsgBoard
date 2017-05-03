@@ -38,8 +38,10 @@ class Comment extends Component {
     if (e.key === 'Enter') {
       if (this.state.user !== '' && this.state.reply !== '') {
         this.props.onSendReply(this.props.comment.commentIdx,
-          this.state.user, this.state.reply);
-        this.setState({ reply: '', showReplyInput: false, showReply: true });
+          this.state.user, this.state.reply)
+          .then(() => {
+            this.setState({ reply: '', showReply: true });
+          });
       }
     }
   }
@@ -67,23 +69,29 @@ class Comment extends Component {
           <div className="User">{this.props.comment.user}</div>
           <div className="Message">{this.props.comment.message}</div>
           <span className="ReplyButton" onClick={this.clickReply}> Reply </span>
+          <span className="Time">{this.props.comment.time}</span>
           {(this.props.comment.replies.length > 0) ?
             (this.state.showReply) ?
               <span className="ShownHide">
                 <img
+                  className="ArrowImg"
                   alt="hide"
                   src={hideIco} onClick={this.hideReply}
                 />
-                {this.props.comment.replies.length}
+                <span className="ReplyNum">
+                  {this.props.comment.replies.length}
+                </span>
               </span> :
               <span className="ShownHide">
                 <img
+                  className="ArrowImg"
                   alt="show"
                   src={showIco} onClick={this.showReply}
                 />
-                {this.props.comment.replies.length}
+                <span className="ReplyNum">
+                  {this.props.comment.replies.length}
+                </span>
               </span> : null}
-          <span className="Time">{this.props.comment.time}</span>
         </div>
         {Replies}
         {(this.state.showReplyInput) ?

@@ -44,7 +44,7 @@ class MsgBoard extends Component {
   }
 
   getPage(p) {
-    axios.get(`/comments/${p}`)
+    return axios.get(`/comments/${p}`)
     .then((res) => {
       res.data.comments.forEach((comment) => {
         comment.time = getTimeStr(comment.time);
@@ -52,19 +52,25 @@ class MsgBoard extends Component {
           reply.time = getTimeStr(reply.time);
         });
       });
-      this.setState({ comments: res.data.comments.reverse(), totalPage: res.data.totalPage });
+      this.setState({ comments: res.data.comments.reverse(),
+        totalPage: res.data.totalPage });
     }).catch((err) => {
       console.log(err);
     });
   }
+
   nextPage() {
-    this.getPage(this.state.currentPage + 1);
-    this.setState({ currentPage: this.state.currentPage + 1 });
+    this.getPage(this.state.currentPage + 1)
+    .then(() => {
+      this.setState({ currentPage: this.state.currentPage + 1 });
+    });
   }
 
   previousPage() {
-    this.getPage(this.state.currentPage - 1);
-    this.setState({ currentPage: this.state.currentPage - 1 });
+    this.getPage(this.state.currentPage - 1)
+    .then(() => {
+      this.setState({ currentPage: this.state.currentPage - 1 });
+    });
   }
 
   handleNameChange(e) {
@@ -101,7 +107,7 @@ class MsgBoard extends Component {
 
   sendReply(idx, user, reply) {
     const time = new Date();
-    axios.post('/replies', {
+    return axios.post('/replies', {
       user: user,
       message: reply,
       time: time,
