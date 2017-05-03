@@ -14,9 +14,9 @@ function to2Digits(str) {
 
 function getTimeStr(str) {
   const time = new Date(str);
-  return `${time.getFullYear()}-${to2Digits(time.getMonth() + 1)}-
-    ${to2Digits(time.getDate())} ${to2Digits(time.getHours())}:
-    ${to2Digits(time.getMinutes())}`;
+  return `${time.getFullYear()}-${to2Digits(time.getMonth() + 1)}-` +
+    `${to2Digits(time.getDate())} ${to2Digits(time.getHours())}:` +
+    `${to2Digits(time.getMinutes())}`;
 }
 
 class MsgBoard extends Component {
