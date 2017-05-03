@@ -13,7 +13,7 @@ class Comment extends Component {
       reply: '',
       showReply: false,
     };
-    
+
     this.clickReply = this.clickReply.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleReplyChange = this.handleReplyChange.bind(this);
@@ -27,19 +27,19 @@ class Comment extends Component {
   }
 
   handleNameChange(e) {
-    this.setState({ user: e.target.value});
+    this.setState({ user: e.target.value });
   }
 
   handleReplyChange(e) {
-    this.setState({ reply: e.target.value});
+    this.setState({ reply: e.target.value });
   }
-  
+
   sendReply(e) {
-    if(e.key === 'Enter') {
-      if(this.state.user!=='' && this.state.reply!==''){
-        this.props.onSendReply(this.props.comment.commentIdx, 
+    if (e.key === 'Enter') {
+      if (this.state.user !== '' && this.state.reply !== '') {
+        this.props.onSendReply(this.props.comment.commentIdx,
           this.state.user, this.state.reply);
-        this.setState({ reply: '', showReplyInput: false, showReply: true});
+        this.setState({ reply: '', showReplyInput: false, showReply: true });
       }
     }
   }
@@ -62,38 +62,42 @@ class Comment extends Component {
         />) : null;
 
     return (
-      <div className='Comment'>
+      <div className="Comment">
         <div>
-          <div className='User'>{this.props.comment.user}</div>
-          <div className='Message'>{this.props.comment.message}</div>
-          <span className='ReplyButton' onClick={this.clickReply}> Reply </span>
-          {(this.props.comment.replies.length>0) ?
+          <div className="User">{this.props.comment.user}</div>
+          <div className="Message">{this.props.comment.message}</div>
+          <span className="ReplyButton" onClick={this.clickReply}> Reply </span>
+          {(this.props.comment.replies.length > 0) ?
             (this.state.showReply) ?
-              <span className='ShownHide'>
+              <span className="ShownHide">
                 <img
-                  alt='hide'
+                  alt="hide"
                   src={hideIco} onClick={this.hideReply}
                 />
                 {this.props.comment.replies.length}
               </span> :
-              <span className='ShownHide'>
+              <span className="ShownHide">
                 <img
-                  alt='show'
+                  alt="show"
                   src={showIco} onClick={this.showReply}
                 />
                 {this.props.comment.replies.length}
               </span> : null}
-          <span className='Time'>{this.props.comment.time}</span>
+          <span className="Time">{this.props.comment.time}</span>
         </div>
         {Replies}
         {(this.state.showReplyInput) ?
-          <div className='ReplyInput'>
-            <input type='text' style={{fontSize: '16px'}} placeholder='name'
+          <div className="ReplyInput">
+            <input
+              type="text" style={{ fontSize: '16px' }} placeholder="name"
               value={this.state.user}
-              onChange={this.handleNameChange} onKeyPress={this.sendReply}/>
-            <input type='text' style={{fontSize: '16px'}} placeholder='reply here'
+              onChange={this.handleNameChange} onKeyPress={this.sendReply}
+            />
+            <input
+              type="text" style={{ fontSize: '16px' }} placeholder="reply here"
               value={this.state.reply}
-              onChange={this.handleReplyChange} onKeyPress={this.sendReply}/>
+              onChange={this.handleReplyChange} onKeyPress={this.sendReply}
+            />
           </div> : null}
       </div>
     );
@@ -102,7 +106,6 @@ class Comment extends Component {
 
 Comment.propTypes = {
   comment: React.PropTypes.object,
-  onClickReply: React.PropTypes.func,
   onSendReply: React.PropTypes.func,
 };
 

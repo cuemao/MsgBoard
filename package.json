@@ -4,11 +4,11 @@
   "private": true,
   "homepage": "https://cuemao.github.io/MsgBoard/",
   "dependencies": {
+    "axios": "^0.16.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
-    "axios": "^0.16.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
@@ -22,6 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "npm run build&&gh-pages -d build"
+    "deploy": "npm run build&&gh-pages -d build",
+    "lint": "eslint src/" 
   }
 }
