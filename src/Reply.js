@@ -15,7 +15,7 @@ class Reply extends Component {
     return (
       <div className="Reply">
         <div className="User">{this.props.reply.user}</div>
-        <div className="Message">{this.props.reply.message.replace('\n', '<br />')}</div>
+        <div className="Message">{this.props.reply.message}</div>
         <span className="ReplyButton" onClick={this.clickReply}> Reply </span>
         <span className="Time">{this.props.reply.time}</span>
       </div>
