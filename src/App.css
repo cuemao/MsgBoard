@@ -136,6 +136,11 @@ input {
   font-family: Arial, Microsoft JhengHei;
 }
 
+input:disabled {
+  color: gray;
+  background: rgba(0,0,0,0.2);
+}
+
 input:focus {
   border-bottom: 2px solid gray;
 }

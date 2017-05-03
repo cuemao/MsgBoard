@@ -12,6 +12,7 @@ class Comment extends Component {
       user: '',
       reply: '',
       showReply: false,
+      waiting: false,
     };
 
     this.clickReply = this.clickReply.bind(this);
@@ -37,10 +38,11 @@ class Comment extends Component {
   sendReply(e) {
     if (e.key === 'Enter') {
       if (this.state.user !== '' && this.state.reply !== '') {
+        this.setState({ waiting: true });
         this.props.onSendReply(this.props.comment.commentIdx,
           this.state.user, this.state.reply)
           .then(() => {
-            this.setState({ reply: '', showReply: true });
+            this.setState({ reply: '', showReply: true, waiting: false });
           });
       }
     }
@@ -97,11 +99,13 @@ class Comment extends Component {
         {(this.state.showReplyInput) ?
           <div className="ReplyInput">
             <input
+              disabled={(this.state.waiting) ? 'disabled' : null}
               type="text" style={{ fontSize: '16px' }} placeholder="name"
               value={this.state.user}
               onChange={this.handleNameChange} onKeyPress={this.sendReply}
             />
             <input
+              disabled={(this.state.waiting) ? 'disabled' : null}
               type="text" style={{ fontSize: '16px' }} placeholder="reply here"
               value={this.state.reply}
               onChange={this.handleReplyChange} onKeyPress={this.sendReply}

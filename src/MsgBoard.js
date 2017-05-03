@@ -28,6 +28,7 @@ class MsgBoard extends Component {
       comments: [],
       currentPage: 0,
       totalPage: 1,
+      waiting: false,
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -85,6 +86,7 @@ class MsgBoard extends Component {
     if (e.key === 'Enter') {
       if (this.state.user !== '' && this.state.comment !== '') {
         const time = new Date();
+        this.setState({ waiting: true });
         axios.post('/comments', {
           user: this.state.user,
           message: this.state.comment,
@@ -97,7 +99,7 @@ class MsgBoard extends Component {
           this.setState({ comments: comments, comment: '', totalPage: res.data.totalPage });
         }).then(() => {
           this.getPage(0);
-          this.setState({ currentPage: 0 });
+          this.setState({ currentPage: 0, waiting: false, focus: true });
         }).catch((err) => {
           console.log(err);
         });
@@ -136,11 +138,13 @@ class MsgBoard extends Component {
         <h1 className="App-header">Message Board</h1>
         <div className="MessageInput">
           <input
+            disabled={(this.state.waiting) ? 'disabled' : null}
             type="text" placeholder="name"
             value={this.state.user}
             onChange={this.handleNameChange} onKeyPress={this.sendComment}
           />
           <input
+            disabled={(this.state.waiting) ? 'disabled' : null}
             type="text" placeholder="leave a message here"
             value={this.state.comment}
             onChange={this.handleCommentChange} onKeyPress={this.sendComment}
