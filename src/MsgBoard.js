@@ -9,13 +9,13 @@ const axios = require('axios');
 axios.defaults.baseURL = 'https://server-urbgaaleox.now.sh';
 
 function to2Digits(str) {
-  return (`0,${str}`).slice(-2);
+  return (`0${str}`).slice(-2);
 }
 
 function getTimeStr(str) {
   const time = new Date(str);
-  return `${time.getFullYear()},-,${to2Digits(time.getMonth() + 1)},-,
-    ${to2Digits(time.getDate())}, ,${to2Digits(time.getHours())}:
+  return `${time.getFullYear()}-${to2Digits(time.getMonth() + 1)}-
+    ${to2Digits(time.getDate())} ${to2Digits(time.getHours())}:
     ${to2Digits(time.getMinutes())}`;
 }
 
@@ -44,7 +44,7 @@ class MsgBoard extends Component {
   }
 
   getPage(p) {
-    axios.get(`/comments/,${p}`)
+    axios.get(`/comments/${p}`)
     .then((res) => {
       res.data.comments.forEach((comment) => {
         comment.time = getTimeStr(comment.time);
