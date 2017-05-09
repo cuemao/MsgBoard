@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import showIco from './pic/show.png';
 import hideIco from './pic/hide.png';
 import Reply from './Reply';
+import './index.css';
 
 class Comment extends Component {
   constructor(props) {

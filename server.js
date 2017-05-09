@@ -1,17 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const data = [];
-app.set('port', 3001);
+app.set('port', 3000);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static('dist'));
 
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
   next();
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.get('/comments/:page', (req, res) => {

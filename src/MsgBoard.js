@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
 import Comment from './Comment';
 import nextIco from './pic/next.png';
 import previousIco from './pic/previous.png';
+import './index.css';
 
 const axios = require('axios');
-
-axios.defaults.baseURL = 'https://server-urbgaaleox.now.sh';
 
 function to2Digits(str) {
   return (`0${str}`).slice(-2);
