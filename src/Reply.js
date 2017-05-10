@@ -12,10 +12,15 @@ class Reply extends Component {
   }
 
   render() {
+    const Message = this.props.reply.message.split('\n').map((seg) =>
+      <span>
+        {seg}
+        <br />
+      </span> );
     return (
       <div className="Reply">
         <div className="User">{this.props.reply.user}</div>
-        <div className="Message">{this.props.reply.message}</div>
+        <div className="Message">{Message}</div>
         <span className="ReplyButton" onClick={this.clickReply}> Reply </span>
         <span className="Time">{this.props.reply.time}</span>
       </div>

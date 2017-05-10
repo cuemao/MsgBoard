@@ -80,8 +80,7 @@ class MsgBoard extends Component {
     this.setState({ comment: e.target.value });
   }
 
-  sendComment(e) {
-    if (e.key === 'Enter') {
+  sendComment() {
       if (this.state.user !== '' && this.state.comment !== '') {
         const time = new Date();
         this.setState({ waiting: true });
@@ -102,7 +101,6 @@ class MsgBoard extends Component {
           console.log(err);
         });
       }
-    }
   }
 
   sendReply(idx, user, reply) {
@@ -139,14 +137,16 @@ class MsgBoard extends Component {
             disabled={(this.state.waiting) ? 'disabled' : null}
             type="text" placeholder="name"
             value={this.state.user}
-            onChange={this.handleNameChange} onKeyPress={this.sendComment}
+            onChange={this.handleNameChange}
           />
-          <input
+          <textarea className="TextArea"
             disabled={(this.state.waiting) ? 'disabled' : null}
             type="text" placeholder="leave a message here"
             value={this.state.comment}
-            onChange={this.handleCommentChange} onKeyPress={this.sendComment}
+            onChange={this.handleCommentChange}
           />
+          <button onClick={this.sendComment}
+            style={{float: 'right'}}>Send</button>
         </div>
         {Comments}
         <div className="Page">

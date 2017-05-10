@@ -35,8 +35,7 @@ class Comment extends Component {
     this.setState({ reply: e.target.value });
   }
 
-  sendReply(e) {
-    if (e.key === 'Enter') {
+  sendReply() {
       if (this.state.user !== '' && this.state.reply !== '') {
         this.setState({ waiting: true });
         this.props.onSendReply(this.props.comment.commentIdx,
@@ -45,7 +44,6 @@ class Comment extends Component {
             this.setState({ reply: '', showReply: true, waiting: false });
           });
       }
-    }
   }
 
   showReply() {
@@ -64,12 +62,18 @@ class Comment extends Component {
           reply={reply}
           onClickReply={this.clickReply}
         />) : null;
+    
+    const Message = this.props.comment.message.split('\n').map((seg) =>
+      <span>
+        {seg}
+        <br/>
+      </span> );
 
     return (
       <div className="Comment">
         <div>
           <div className="User">{this.props.comment.user}</div>
-          <div className="Message">{this.props.comment.message}</div>
+          <div className="Message">{Message}</div>
           <span className="ReplyButton" onClick={this.clickReply}> Reply </span>
           <span className="Time">{this.props.comment.time}</span>
           {(this.props.comment.replies.length > 0) ?
@@ -102,14 +106,16 @@ class Comment extends Component {
               disabled={(this.state.waiting) ? 'disabled' : null}
               type="text" style={{ fontSize: '16px' }} placeholder="name"
               value={this.state.user}
-              onChange={this.handleNameChange} onKeyPress={this.sendReply}
+              onChange={this.handleNameChange}
             />
-            <input
+            <textarea
               disabled={(this.state.waiting) ? 'disabled' : null}
               type="text" style={{ fontSize: '16px' }} placeholder="reply here"
               value={this.state.reply}
-              onChange={this.handleReplyChange} onKeyPress={this.sendReply}
+              onChange={this.handleReplyChange}
             />
+            <button onClick={this.sendReply}
+              style={{float: 'right'}}> send </button>
           </div> : null}
       </div>
     );
